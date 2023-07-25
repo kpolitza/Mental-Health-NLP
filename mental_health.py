@@ -51,7 +51,7 @@ class logreg:
     def run(self, dframe):
         """
         This function acts as a driver for the generation of a logistic regression model.
-        Tokenizes text data, generates train/test split, and fits data to model.
+        Tokenizes text data, generates train/test split, fits data to model, and plots feature importance.
 
         Args:
             dframe (Dataframe): Pandas Dataframe containing the mental_health information.
