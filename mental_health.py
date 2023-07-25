@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import sklearn as sk
 from sklearn.linear_model import LogisticRegression
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
@@ -56,6 +56,7 @@ class logreg:
         Args:
             dframe (Dataframe): Pandas Dataframe containing the mental_health information.
         """
+        #tokenizing input
         vectorizer = CountVectorizer(max_features=15)
         X = vectorizer.fit_transform(dframe["text"])
         y = dframe["label"]
@@ -63,11 +64,33 @@ class logreg:
         model = LogisticRegression()
         model.fit(X_train, y_train)
 
+        #reporting
         y_pred = model.predict(X_test)
         acc = accuracy_score(y_test, y_pred)
         print("Log Reg Accuracy: {:.2f}%".format(acc * 100))
         report = classification_report(y_test, y_pred)
         print(report)
+        
+        #visualization: feature importance 
+        feature_names = vectorizer.get_feature_names_out()
+        coeffs = model.coef_[0]
+        
+        #sort features
+        sorted_indices = np.argsort(feature_names)
+        sorted_feature_names = [sorted_indices[x] for x in sorted_indices]
+        sorted_coeffs = coeffs[sorted_indices]
+        print(feature_names)
+        
+        #display
+        plt.figure(figsize=(8, 6))
+        plt.barh(range(len(sorted_feature_names)), sorted_coeffs, color='skyblue')
+        plt.yticks(range(len(sorted_feature_names)), sorted_feature_names)
+        plt.xlabel('Coefficient (Feature Importance)')
+        plt.ylabel('Feature')
+        plt.title('Logistic Regression Feature Importance Plot')
+        plt.tight_layout()
+        plt.show()
+        
         
 
 if __name__ == "__main__":
