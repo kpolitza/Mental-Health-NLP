@@ -95,6 +95,7 @@ class logreg:
 
 if __name__ == "__main__":
     df = pd.read_csv("mental_health.csv")
+    
     logistic_model = logreg()
     logistic_model.run(df)
     NB_model = gaussNB()
