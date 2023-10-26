@@ -9,6 +9,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 
 
@@ -91,6 +92,13 @@ class logreg:
         plt.tight_layout()
         plt.show()
         
+        #confusion matrix
+        cm = confusion_matrix(y_test, y_pred)
+        cm_display = ConfusionMatrixDisplay(cm, display_labels=["Class 0", "Class 1"])
+        cm_display.plot(include_values=True, cmap="Blues")
+        plt.title("Confusion Mat Log Reg")
+        plt.show()
+        
         
 
 if __name__ == "__main__":
@@ -98,5 +106,5 @@ if __name__ == "__main__":
     
     logistic_model = logreg()
     logistic_model.run(df)
-    NB_model = gaussNB()
-    NB_model.run(df)
+    #NB_model = gaussNB()
+    #NB_model.run(df)
